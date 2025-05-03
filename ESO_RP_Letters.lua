@@ -41,10 +41,10 @@ function EsoRpLetters.CreateGameMenuButton()
         end,
         visible = function(buttonData) return true end,
     
-        normal = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_up.dds",
-        pressed = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_down.dds",
-        highlight = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_over.dds",
-        disabled = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_disabled.dds"
+        normal = "/esoui/art/icons/housing_bre_inc_book_closed002.dds",
+        pressed = "/esoui/art/icons/housing_bre_inc_book_open001.dds",
+        highlight = "/esoui/art/icons/housing_bre_inc_book_closed002.dds",
+        disabled = "/esoui/art/icons/quest_murkmire_captain_hostias_journal"
     }
     
     -- Add the button to the menu
