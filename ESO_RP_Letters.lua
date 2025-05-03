@@ -29,12 +29,6 @@ function EsoRpLetters.CreateGameMenuButton()
         return
     end
 
-        -- First, ensure the scene is added to the scene manager
-    if not SCENE_MANAGER:HasScene(menuSceneName) then
-        logger:Error("Scene does not exist.")
-        return
-    end
-
     -- Button category layout information
     local categoryLayoutInfo =
     {
