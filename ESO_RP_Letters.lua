@@ -57,8 +57,8 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
 
-    menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
-    menuScene:AddFragment(BACKGROUND_FRAGMENT)
+    -- menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
+    -- menuScene:AddFragment(BACKGROUND_FRAGMENT)
 
     logger.Info("init pannels start");
     -- Create the main panel for the letter book
