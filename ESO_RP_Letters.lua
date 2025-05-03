@@ -9,9 +9,6 @@ local bookPanel
 local bg
 local label
 
-local panel = EsoRpLetters_ListPanel
-local titleLabel = panel:GetNamedChild("Title")
-
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Creating game menu button")
@@ -60,28 +57,11 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
 
     -- Optional: set window title
-    menuScene:AddFragment(ZO_WindowTitleFragment:New(titleLabel))
+    -- menuScene:AddFragment(ZO_WindowTitleFragment:New(titleLabel))
 end
 
 function EsoRpLetters.InitPanel()
     logger.Info("init panel start");
-    local control = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_Panel")
-    control:SetAnchorFill(GuiRoot)
-    control:SetHidden(true)
-
-    EsoRpLetters.scrollList = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLetters_ScrollList", control, "ZO_ScrollList")
-    EsoRpLetters.scrollList:SetAnchorFill()
-
-    ZO_ScrollList_AddDataType(EsoRpLetters.scrollList, 1, "ZO_ScrollList_Item", 30,
-        function(control, data)
-            control:GetNamedChild("Text"):SetText(data.text)
-        end
-    )
-
-    ZO_ScrollList_EnableHighlight(EsoRpLetters.scrollList, "ZO_ThinListHighlight")
-    ZO_ScrollList_Commit(EsoRpLetters.scrollList)
-
-    menuScene:AddFragment(ZO_FadeSceneFragment:New(control))
 end
 
 function EsoRpLetters.initStateChanges()
@@ -94,24 +74,6 @@ function EsoRpLetters.initStateChanges()
     end)
 end
 
-function EsoRpLetters.PopulateLetters(letterList)
-    local scrollData = ZO_ScrollList_GetDataList(EsoRpLetters.scrollList)
-    ZO_ClearNumericallyIndexedTable(scrollData)
-
-    for _, letter in ipairs(letterList) do
-        table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, {
-            text = letter.title,
-            body = letter.body
-        }))
-    end
-
-    ZO_ScrollList_Commit(EsoRpLetters.scrollList)
-end
-
-function EsoRpLetters.OnLetterClicked(letter)
-    LORE_READER:SetupBook(letter.title, letter.body)
-    SCENE_MANAGER:Show("loreReader")
-end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
