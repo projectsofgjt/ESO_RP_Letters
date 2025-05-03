@@ -50,24 +50,6 @@ end
 function EsoRpLetters.InitScene()
     logger.Info("init scene start");
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-
-    menuScene:AddFragment(PLAYER_CAMERA_FRAGMENT) -- Locks to first person view
-    menuScene:AddFragment(FRAME_PLAYER_FRAGMENT) -- Fades out main UI
-    menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
-    menuScene:AddFragment(FRAME_EMOTE_FRAGMENT_INVENTORY) -- (Optional) for book-style camera feel
-    menuScene:AddFragment(MENU_SOUND_CATEGORY_LORE_READER_FRAGMENT)
-
-    -- streatch goal of setting of book vs standard menu. book for now
-    if(false) then
-        menuScene:AddFragment(TITLE_FRAGMENT)
-        menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
-        menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-    end
-    
-
-    -- menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
-    -- menuScene:AddFragment(BACKGROUND_FRAGMENT)
 
     logger.Info("init pannels start");
     -- Create the main panel for the letter book
@@ -93,8 +75,23 @@ function EsoRpLetters.InitScene()
     label:SetAnchor(CENTER, bookPanel, CENTER, 0, 0)
     label:SetText("Letters will go here...")
 
-    -- Add the panel to your custom scene
-    menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel))
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
+    -- menuScene:AddFragment(PLAYER_CAMERA_FRAGMENT) -- Locks to first person view
+    menuScene:AddFragment(FRAME_PLAYER_FRAGMENT) -- Fades out main UI
+    menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
+    menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
+    -- menuScene:AddFragment(FRAME_EMOTE_FRAGMENT_INVENTORY) -- (Optional) for book-style camera feel
+    -- menuScene:AddFragment(MENU_SOUND_CATEGORY_LORE_READER_FRAGMENT)
+    
+
+    -- streatch goal of setting of book vs standard menu. book for now
+    if(false) then
+        menuScene:AddFragment(TITLE_FRAGMENT)
+        menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+        menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+    end
+    
     logger.Info("init pannels end");
 end
 
