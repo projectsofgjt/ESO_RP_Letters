@@ -76,9 +76,9 @@ function EsoRpLetters.InitScene()
     label:SetText("Letters will go here...")
 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.UI_LORE_READER)
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
     menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
+    menuScene:AddFragment(FRAME_EMOTE_FRAGMENT)
   
     
     logger.Info("init pannels end");
@@ -87,8 +87,18 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
+            -- Save current view mode
+            EsoRpLetters.wasThirdPerson = not IsFirstPersonCamera()
+            -- Switch to first-person
+            if EsoRpLetters.wasThirdPerson then
+                ToggleFirstPerson()
+            end
             PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
         elseif newState == SCENE_HIDDEN then
+            -- Restore previous view
+            if EsoRpLetters.wasThirdPerson then
+                ToggleFirstPerson()
+            end
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
