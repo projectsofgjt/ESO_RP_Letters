@@ -47,7 +47,20 @@ function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Game menu button created successfully")
 end
 
-function EsoRpLetters.InitPannels()
+function EsoRpLetters.InitScene()
+    logger.Info("init scene start");
+    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+
+    menuScene:AddFragment(TITLE_FRAGMENT)
+    menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+    menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+    menuScene:AddFragment(ZO_WindowTitleFragment:New("Letter Notebook"))
+
+    menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
+    menuScene:AddFragment(BACKGROUND_FRAGMENT)
+
     logger.Info("init pannels start");
     -- Create the main panel for the letter book
     bookPanel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_BookPanel")
@@ -77,16 +90,24 @@ function EsoRpLetters.InitPannels()
     logger.Info("init pannels end");
 end
 
+function EsoRpLetters.initStateChanges()
+    menuScene:RegisterCallback("StateChange", function(oldState, newState)
+        if newState == SCENE_SHOWING then
+            PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
+        elseif newState == SCENE_HIDDEN then
+            RemoveActionLayerByName("SceneActionLayer")
+        end
+    end)
+end
+
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
-    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
+    EsoRpLetters.InitScene();
     ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
-
-    -- Initialize addon components
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
-    EsoRpLetters.InitPannels();
+    EsoRpLetters.initStateChanges();
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
