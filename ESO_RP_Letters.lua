@@ -2,8 +2,10 @@ EsoRpLetters = {}
 EsoRpLetters.name = "ESO_RP_Letters"
 
 local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
-local sceneName = "EsoRpLetters"  -- Define the scene name
+local menuSceneName = "EsoRpLetters"  -- Define the scene name
+local menuScene -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
+
 
 -- Function to display the RP letters panel (currently just a blank screen)
 function EsoRpLetters.ShowLetterPanel()
@@ -28,7 +30,7 @@ function EsoRpLetters.CreateGameMenuButton()
     end
 
         -- First, ensure the scene is added to the scene manager
-    if not SCENE_MANAGER:HasScene(sceneName) then
+    if not SCENE_MANAGER:HasScene(menuSceneName) then
         logger:Error("Scene does not exist.")
         return
     end
@@ -39,8 +41,8 @@ function EsoRpLetters.CreateGameMenuButton()
         binding = "TOGGLE_ESO_RP_LETTERS",
         categoryName = SI_ESO_RP_LETTERS,
         callback = function(buttonData)
-            if not SCENE_MANAGER:IsShowing(sceneName) then
-                SCENE_MANAGER:Show(sceneName)
+            if not SCENE_MANAGER:IsShowing(menuSceneName) then
+                SCENE_MANAGER:Show(menuSceneName)
             end
         end,
         visible = function(buttonData) return true end,
@@ -52,7 +54,7 @@ function EsoRpLetters.CreateGameMenuButton()
     }
     
     -- Add the button to the menu
-    local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", sceneName, categoryLayoutInfo, nil)
+    local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", menuSceneName, categoryLayoutInfo, nil)
 
 
     -- Check if the button was added successfully
@@ -64,9 +66,9 @@ function EsoRpLetters.CreateGameMenuButton()
 end
 
 function EsoRpLetters.CreateScene()
- 
+    logger.info("initialize scene")
     -- Main Scene
-    ZO_Scene:New(sceneName, SCENE_MANAGER) 
+    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     
     -- -- Mouse standard position and background
     -- MYADDON_MAIN_SCENE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
