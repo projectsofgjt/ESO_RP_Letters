@@ -23,12 +23,12 @@ function EsoRpLetters.CreateGameMenuButton()
 
     -- Optionally, you can create a simple menu entry using `LibAddonMenu` as well.
     -- This is just a placeholder for later when we need to load the letters
-    d("menu button created")
+    logger:Debug("menu button created")
 end
 
 -- Function to display the RP letters panel (currently just a blank screen)
 function EsoRpLetters.ShowLetterPanel()
-    d("show letter pannel")
+    logger:Info("show letter pannel")
     -- Create a blank screen to be replaced later with the letter list
     local panel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_Panel")
     panel:SetDimensions(800, 600)  -- Set size for the panel

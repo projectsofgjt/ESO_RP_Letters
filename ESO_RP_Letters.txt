@@ -4,5 +4,7 @@
 ## Author: akcats
 ## Description: RP tool for loading in-game letters from markdown files.
 ## SavedVariables: ESORPLettersSavedVars
+## DependsOn: LibAddonMenu-2.0
+## OptionalDependsOn: LibDebugLogger
 
 ESO_RP_Letters.lua
