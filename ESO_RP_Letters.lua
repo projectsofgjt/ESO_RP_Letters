@@ -55,7 +55,6 @@ end
 
 function EsoRpLetters.CreateScene()
     logger.Info("initialize scene" )
-    -- Main Scene
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     
     -- -- Mouse standard position and background
@@ -88,7 +87,7 @@ function EsoRpLetters.Initialize()
     LMM2:Init()
     -- Set scene
     EsoRpLetters.CreateScene()
-    ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter NoteBook");
+    ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
 
     -- Initialize addon components
     -- Register the button in the Game Menu Bar
