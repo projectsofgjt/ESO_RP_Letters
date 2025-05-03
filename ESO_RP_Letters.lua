@@ -33,7 +33,7 @@ function EsoRpLetters.CreateGameMenuButton()
     local categoryLayoutInfo =
     {
         binding = "TOGGLE_ESO_RP_LETTERS",
-        categoryName = SI_ESO_RP_LETTERS,
+        categoryName = STRID_ESO_RP_LETTERS_DISPLAY,
         callback = function(buttonData)
             if not SCENE_MANAGER:IsShowing(menuSceneName) then
                 SCENE_MANAGER:Show(menuSceneName)
@@ -48,7 +48,7 @@ function EsoRpLetters.CreateGameMenuButton()
     }
     
     -- Add the button to the menu
-    LMM2:AddMenuItem("SI_ESO_RP_LETTERS", menuSceneName, categoryLayoutInfo, nil)
+    LMM2:AddMenuItem(menuSceneName, menuSceneName, categoryLayoutInfo, nil)
 
     logger:Info("Game menu button created successfully")
 end
@@ -83,12 +83,14 @@ end
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
 
-    -- Initialize LibMainMenu2 here to make sure it's ready before use
+    -- Initialize librarys and needed high scope vairables
     LMM2 = LibMainMenu2
     LMM2:Init()
-
     -- Set scene
     EsoRpLetters.CreateScene()
+    Zo_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter NoteBook");
+
+    -- Initialize addon components
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
 end
