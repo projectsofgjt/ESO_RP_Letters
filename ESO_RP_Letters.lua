@@ -67,10 +67,8 @@ function EsoRpLetters.InitScene()
     bg:SetCenterColor(0.1, 0.1, 0.1, 0.9) -- Dark semi-transparent
     bg:SetEdgeColor(1, 1, 1, 0.4)
     bg:SetEdgeTexture(nil, 1, 1, 1.0)
-    bg:SetCenterTexture("/esoui/art/book/book_background.dds", 8, 8)
-
     -- Open book texture (replace with your actual open book texture)
-    bg:SetCenterTexture("/esoui/art/lorelibrary/lorelibrary_paperbook.dds", 8, 8)  -- Example texture
+    bg:SetTexture("/esoui/art/lorelibrary/lorelibrary_paperbook.dds") 
 
     -- Add a simple label (for demo/testing)
     label = WINDOW_MANAGER:CreateControl("$(parent)_Label", bookPanel, CT_LABEL)
