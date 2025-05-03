@@ -77,20 +77,9 @@ function EsoRpLetters.InitScene()
 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
-    -- menuScene:AddFragment(PLAYER_CAMERA_FRAGMENT) -- Locks to first person view
     menuScene:AddFragment(FRAME_PLAYER_FRAGMENT) -- Fades out main UI
-    -- menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
     menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
-    -- menuScene:AddFragment(FRAME_EMOTE_FRAGMENT_INVENTORY) -- (Optional) for book-style camera feel
-    -- menuScene:AddFragment(MENU_SOUND_CATEGORY_LORE_READER_FRAGMENT)
-    
-
-    -- streatch goal of setting of book vs standard menu. book for now
-    if(false) then
-        menuScene:AddFragment(TITLE_FRAGMENT)
-        menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
-        menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-    end
+  
     
     logger.Info("init pannels end");
 end
@@ -98,10 +87,18 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
-            SetGameCameraUIMode(true)
+            -- Save current view mode
+            EsoRpLetters.wasThirdPerson = not IsFirstPersonCamera()
+            -- Switch to first-person
+            if EsoRpLetters.wasThirdPerson then
+                ToggleFirstPerson()
+            end
             PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
         elseif newState == SCENE_HIDDEN then
-            SetGameCameraUIMode(false)
+             -- Restore previous view
+            if EsoRpLetters.wasThirdPerson then
+                ToggleFirstPerson()
+            end
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
