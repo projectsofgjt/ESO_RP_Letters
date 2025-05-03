@@ -51,7 +51,12 @@ function EsoRpLetters.InitScene()
     logger.Info("init scene start");
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+
+    menuScene:AddFragment(PLAYER_CAMERA_FRAGMENT) -- Locks to first person view
+    menuScene:AddFragment(FRAME_PLAYER_FRAGMENT) -- Fades out main UI
+    menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
+    menuScene:AddFragment(FRAME_EMOTE_FRAGMENT_INVENTORY) -- (Optional) for book-style camera feel
+    menuScene:AddFragment(MENU_SOUND_CATEGORY_LORE_READER_FRAGMENT)
 
     -- streatch goal of setting of book vs standard menu. book for now
     if(false) then
@@ -96,8 +101,10 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
+            SetGameCameraUIMode(true)
             PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
         elseif newState == SCENE_HIDDEN then
+            SetGameCameraUIMode(false)
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
