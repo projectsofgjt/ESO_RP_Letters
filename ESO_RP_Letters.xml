@@ -1,9 +1,6 @@
 <GuiXml>
     <Controls>
-        <TopLevelControl name="EsoRpLettersControl" mouseEnabled="true" movable="false" clampedToScreen="true" hidden="true">
-            <Dimensions x="1000" y="700" />
-            <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="CENTER" />
-
+        <TopLevelControl name="EsoRpLettersControl" hidden="true">
             <Controls>
                 <Backdrop name="$(parent)BG"
                           inherits="ZO_ThinBackdrop"
