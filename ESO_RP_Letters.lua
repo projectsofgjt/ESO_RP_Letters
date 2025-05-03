@@ -48,15 +48,9 @@ function EsoRpLetters.CreateGameMenuButton()
     }
     
     -- Add the button to the menu
-    local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", menuSceneName, categoryLayoutInfo, nil)
+    LMM2:AddMenuItem("SI_ESO_RP_LETTERS", menuSceneName, categoryLayoutInfo, nil)
 
-
-    -- Check if the button was added successfully
-    if result then
-        logger:Info("Game menu button created successfully")
-    else
-        logger:Error("Failed to create game menu button")
-    end
+    logger:Info("Game menu button created successfully")
 end
 
 function EsoRpLetters.CreateScene()
