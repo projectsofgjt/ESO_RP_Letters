@@ -69,11 +69,15 @@ function EsoRpLetters.InitScene()
     bg:SetEdgeTexture(nil, 1, 1, 1.0)
     bg:SetCenterTexture("/esoui/art/book/book_background.dds", 8, 8)
 
+    -- Open book texture (replace with your actual open book texture)
+    bg:SetCenterTexture("/esoui/art/book/book_opened.dds", 8, 8)  -- Example texture
+
     -- Add a simple label (for demo/testing)
     label = WINDOW_MANAGER:CreateControl("$(parent)_Label", bookPanel, CT_LABEL)
     label:SetFont("ZoFontWinH1")
     label:SetAnchor(CENTER, bookPanel, CENTER, 0, 0)
     label:SetText("Letters will go here...")
+    
 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
