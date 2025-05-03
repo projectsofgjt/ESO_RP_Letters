@@ -66,7 +66,7 @@ function EsoRpLetters.CreateGameMenuButton()
 end
 
 function EsoRpLetters.CreateScene()
-    logger.info("initialize scene" .. menuSceneName)
+    logger.Info("initialize scene" )
     -- Main Scene
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     
