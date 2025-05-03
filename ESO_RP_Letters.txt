@@ -1,0 +1,8 @@
+## Title: ESO RP Letters
+## APIVersion: 101045
+## Version: 0.1
+## Author: akcats
+## Description: RP tool for loading in-game letters from markdown files.
+## SavedVariables: ESORPLettersSavedVars
+
+ESO_RP_Letters.lua
