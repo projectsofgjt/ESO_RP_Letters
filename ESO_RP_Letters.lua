@@ -49,41 +49,35 @@ end
 
 function EsoRpLetters.InitScene()
     logger.Info("init scene start");
-    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
-
-    logger.Info("init pannels start");
-    -- Create the main panel for the letter book
-    bookPanel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_BookPanel")
-    bookPanel:SetDimensions(800, 600)
-    bookPanel:SetAnchor(CENTER, GuiRoot, CENTER)
-    bookPanel:SetHidden(true)
-    bookPanel:SetMouseEnabled(true)
-    bookPanel:SetMovable(false)
-    bookPanel:SetClampedToScreen(true)
-
-    -- Set a background (you can update this later to something nicer)
-    bg = WINDOW_MANAGER:CreateControl("$(parent)_BG", bookPanel, CT_BACKDROP)
-    bg:SetAnchorFill()
-    bg:SetCenterColor(0.1, 0.1, 0.1, 0.9) -- Dark semi-transparent
-    bg:SetEdgeColor(1, 1, 1, 0.4)
-    bg:SetEdgeTexture(nil, 1, 1, 1.0)
-    -- Open book texture (replace with your actual open book texture)
-    bg:SetCenterTexture("/esoui/art/lorelibrary/lorelibrary_paperbook.dds")
-    bg:SetCenterColor(1, 1, 1, 1)
-
-    -- Add a simple label (for demo/testing)
-    label = WINDOW_MANAGER:CreateControl("$(parent)_Label", bookPanel, CT_LABEL)
-    label:SetFont("ZoFontWinH1")
-    label:SetAnchor(CENTER, bookPanel, CENTER, 0, 0)
-    label:SetText("Letters will go here...")
-    
-
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
-    menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
-  
-    
-    logger.Info("init pannels end");
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    menuScene:AddFragment(TITLE_FRAGMENT)
+    menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+    menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+
+    -- Optional: set window title
+    menuScene:AddFragment(ZO_WindowTitleFragment:New("Letter Archive"))
+end
+
+function EsoRpLetters.InitPanel()
+    logger.Info("init panel start");
+    local control = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_Panel")
+    control:SetAnchorFill(GuiRoot)
+    control:SetHidden(true)
+
+    EsoRpLetters.scrollList = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLetters_ScrollList", control, "ZO_ScrollList")
+    EsoRpLetters.scrollList:SetAnchorFill()
+
+    ZO_ScrollList_AddDataType(EsoRpLetters.scrollList, 1, "ZO_ScrollList_Item", 30,
+        function(control, data)
+            control:GetNamedChild("Text"):SetText(data.text)
+        end
+    )
+
+    ZO_ScrollList_EnableHighlight(EsoRpLetters.scrollList, "ZO_ThinListHighlight")
+    ZO_ScrollList_Commit(EsoRpLetters.scrollList)
+
+    menuScene:AddFragment(ZO_FadeSceneFragment:New(control))
 end
 
 function EsoRpLetters.initStateChanges()
@@ -94,6 +88,25 @@ function EsoRpLetters.initStateChanges()
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
+end
+
+function EsoRpLetters.PopulateLetters(letterList)
+    local scrollData = ZO_ScrollList_GetDataList(EsoRpLetters.scrollList)
+    ZO_ClearNumericallyIndexedTable(scrollData)
+
+    for _, letter in ipairs(letterList) do
+        table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, {
+            text = letter.title,
+            body = letter.body
+        }))
+    end
+
+    ZO_ScrollList_Commit(EsoRpLetters.scrollList)
+end
+
+function EsoRpLetters.OnLetterClicked(letter)
+    LORE_READER:SetupBook(letter.title, letter.body)
+    SCENE_MANAGER:Show("loreReader")
 end
 
 function EsoRpLetters.Initialize()
