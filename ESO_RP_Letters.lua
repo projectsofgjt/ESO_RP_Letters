@@ -10,23 +10,24 @@ end
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
-    logger:Info("menu button creat start")
-    local panelData = {
-        type = "submenu",
+    logger:Info("Creating game menu button")
+
+    local function OpenLetterPanel()
+        EsoRpLetters.ShowLetterPanel()
+    end
+
+    -- Add your entry to ZO_MainMenu
+    ZO_MainMenu_AddButton({
+        categoryName = "ESO_RP_Letters_Menu",
         name = "RP Letters",
-        tooltip = "View your RP letters",
-        -- Here we link a function to be called when this submenu is selected
-        func = EsoRpLetters.ShowLetterPanel,
-        -- Add this to the Game Menu Bar
-        category = "system",
-    }
+        categoryTooltipText = "Read your RP letters",
+        normal = "EsoUI/Art/Journal/journal_tabIcon_notes_up.dds",
+        pressed = "EsoUI/Art/Journal/journal_tabIcon_notes_down.dds",
+        highlight = "EsoUI/Art/Journal/journal_tabIcon_notes_over.dds",
+        callback = OpenLetterPanel,
+    })
 
-    -- Create the button using LibAddonMenu
-    LibAddonMenu2:RegisterAddonPanel("ESO_RP_Letters_Panel", panelData)
-
-    -- Optionally, you can create a simple menu entry using `LibAddonMenu` as well.
-    -- This is just a placeholder for later when we need to load the letters
-    logger:Info("menu button created")
+    logger:Info("Game menu button created")
 end
 
 -- Function to display the RP letters panel (currently just a blank screen)
