@@ -23,6 +23,7 @@ function EsoRpLetters.CreateGameMenuButton()
 
     -- Optionally, you can create a simple menu entry using `LibAddonMenu` as well.
     -- This is just a placeholder for later when we need to load the letters
+    d("menu button created")
 end
 
 -- Function to display the RP letters panel (currently just a blank screen)
