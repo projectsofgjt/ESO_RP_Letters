@@ -3,6 +3,9 @@ EsoRpLetters.name = "ESO_RP_Letters"
 
 function EsoRpLetters.Initialize()
     d("ESO RP Letters initialize.")
+    zo_callLater(function()
+        d("ESO RP Letters initialize.")
+    end, 10000) -- dela
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
