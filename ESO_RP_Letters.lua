@@ -2,7 +2,7 @@ EsoRpLetters = {}
 EsoRpLetters.name = "EsoRpLetters"
 
 function EsoRpLetters.Initialize()
-
+    debug("Addon loaded.")
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
