@@ -79,7 +79,7 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
     -- menuScene:AddFragment(PLAYER_CAMERA_FRAGMENT) -- Locks to first person view
     menuScene:AddFragment(FRAME_PLAYER_FRAGMENT) -- Fades out main UI
-    menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
+    -- menuScene:AddFragment(BACKGROUND_FRAGMENT) -- Applies dark blur
     menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
     -- menuScene:AddFragment(FRAME_EMOTE_FRAGMENT_INVENTORY) -- (Optional) for book-style camera feel
     -- menuScene:AddFragment(MENU_SOUND_CATEGORY_LORE_READER_FRAGMENT)
