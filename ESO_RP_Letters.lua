@@ -52,7 +52,15 @@ function EsoRpLetters.InitScene()
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+
+    -- streatch goal of setting of book vs standard menu. book for now
+    if(false) then
+        menuScene:AddFragment(TITLE_FRAGMENT)
+        menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+        menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+    end
     
+
     -- menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
     -- menuScene:AddFragment(BACKGROUND_FRAGMENT)
 
