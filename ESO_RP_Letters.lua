@@ -27,6 +27,11 @@ end
             return
         end
 
+            -- First, ensure the scene is added to the scene manager
+        if not SCENE_MANAGER:HasScene(sceneName) then
+            SCENE_MANAGER:AddScene(sceneName, ZO_Scene)
+        end
+
         -- Button category layout information
         local categoryLayoutInfo =
         {
@@ -59,7 +64,7 @@ end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
-    
+
     -- Initialize LibMainMenu2 here to make sure it's ready before use
     LMM2 = LibMainMenu2
     LMM2:Init()
