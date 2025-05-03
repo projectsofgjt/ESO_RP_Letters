@@ -76,7 +76,7 @@ function EsoRpLetters.InitScene()
     label:SetText("Letters will go here...")
 
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.UI_LORE_READER)
+    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.UI_LORE_READER)
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
     menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
   
