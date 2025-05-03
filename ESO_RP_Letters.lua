@@ -13,4 +13,4 @@ function EsoRpLetters.OnAddOnLoaded(event, addonName)
     end
 end
 
-EVENT_MANAGER:RegisterForEvent(EsoRpLetters.name, EVENT_ADD_ON_LOADED, EsoRpLetters.OnAddOnLoaded)
+EVENT_MANAGER:RegisterForEvent("ESO_RP_Letters", EVENT_ADD_ON_LOADED, EsoRpLetters.OnAddOnLoaded)
