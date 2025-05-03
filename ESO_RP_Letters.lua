@@ -8,7 +8,7 @@ end
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
     if addonName == EsoRpLetters.name then
         EsoRpLetters.Initialize()
-        EVENt_MANAGER:UnregisterForEvent(EsoRpLetters.name, EVENT_ADD_ON_LOADED)
+        EVENT_MANAGER:UnregisterForEvent(EsoRpLetters.name, EVENT_ADD_ON_LOADED)
     end
 end
 
