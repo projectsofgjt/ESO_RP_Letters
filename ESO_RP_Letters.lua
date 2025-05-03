@@ -5,10 +5,17 @@ local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
 local menuSceneName = "EsoRpLetters"  -- Define the scene name
 local menuScene -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
+local bookPanel
+local bg
+local label
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Creating game menu button")
+
+    -- Initialize librarys and needed high scope vairables
+    LMM2 = LibMainMenu2
+    LMM2:Init()
 
     -- Ensure LMM2 is initialized before proceeding
     if not LMM2 then
@@ -40,12 +47,38 @@ function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Game menu button created successfully")
 end
 
+function EsoRpLetters.InitPannels()
+    logger.Info("init pannels start");
+    -- Create the main panel for the letter book
+    bookPanel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_BookPanel")
+    bookPanel:SetDimensions(800, 600)
+    bookPanel:SetAnchor(CENTER, GuiRoot, CENTER)
+    bookPanel:SetHidden(true)
+    bookPanel:SetMouseEnabled(true)
+    bookPanel:SetMovable(false)
+    bookPanel:SetClampedToScreen(true)
+
+    -- Set a background (you can update this later to something nicer)
+    bg = WINDOW_MANAGER:CreateControl("$(parent)_BG", bookPanel, CT_BACKDROP)
+    bg:SetAnchorFill()
+    bg:SetCenterColor(0.1, 0.1, 0.1, 0.9) -- Dark semi-transparent
+    bg:SetEdgeColor(1, 1, 1, 0.4)
+    bg:SetEdgeTexture(nil, 1, 1, 1.0)
+    bg:SetCenterTexture("/esoui/art/book/book_background.dds", 8, 8)
+
+    -- Add a simple label (for demo/testing)
+    label = WINDOW_MANAGER:CreateControl("$(parent)_Label", bookPanel, CT_LABEL)
+    label:SetFont("ZoFontWinH1")
+    label:SetAnchor(CENTER, bookPanel, CENTER, 0, 0)
+    label:SetText("Letters will go here...")
+
+    -- Add the panel to your custom scene
+    menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel))
+    logger.Info("init pannels end");
+end
+
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
-
-    -- Initialize librarys and needed high scope vairables
-    LMM2 = LibMainMenu2
-    LMM2:Init()
     -- Set scene
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER) 
     ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
@@ -53,6 +86,7 @@ function EsoRpLetters.Initialize()
     -- Initialize addon components
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
+    EsoRpLetters.InitPannels();
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
