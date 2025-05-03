@@ -1,0 +1,11 @@
+<GuiXml>
+    <Controls>
+        <TopLevelControl name="EsoRpLetterUi" inherits="ZO_RightPanelFootPrint" hidden="true">
+            <OnInitialized>
+                EsoRpLetters.initData(self)
+            </OnInitialized>
+            <Controls>
+            </Controls>
+        </TopLevelControl>
+    </Controls>
+</GuiXml>

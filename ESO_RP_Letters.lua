@@ -18,49 +18,77 @@ function EsoRpLetters.ShowLetterPanel()
 end
 
 -- This function creates a button in the Game Menu Bar
-    function EsoRpLetters.CreateGameMenuButton()
-        logger:Info("Creating game menu button")
+function EsoRpLetters.CreateGameMenuButton()
+    logger:Info("Creating game menu button")
 
-        -- Ensure LMM2 is initialized before proceeding
-        if not LMM2 then
-            logger:Error("LibMainMenu2 is not initialized.")
-            return
-        end
-
-            -- First, ensure the scene is added to the scene manager
-        if not SCENE_MANAGER:HasScene(sceneName) then
-            SCENE_MANAGER:AddScene(sceneName, ZO_Scene)
-        end
-
-        -- Button category layout information
-        local categoryLayoutInfo =
-        {
-            binding = "TOGGLE_ESO_RP_LETTERS",
-            categoryName = SI_ESO_RP_LETTERS,
-            callback = function(buttonData)
-                if not SCENE_MANAGER:IsShowing(sceneName) then
-                    SCENE_MANAGER:Show(sceneName)
-                end
-            end,
-            visible = function(buttonData) return true end,
-        
-            normal = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_up.dds",
-			pressed = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_down.dds",
-			highlight = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_over.dds",
-			disabled = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_disabled.dds"
-        }
-        
-        -- Add the button to the menu
-        local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", sceneName, categoryLayoutInfo, nil)
-
-    
-        -- Check if the button was added successfully
-        if result then
-            logger:Info("Game menu button created successfully")
-        else
-            logger:Error("Failed to create game menu button")
-        end
+    -- Ensure LMM2 is initialized before proceeding
+    if not LMM2 then
+        logger:Error("LibMainMenu2 is not initialized.")
+        return
     end
+
+        -- First, ensure the scene is added to the scene manager
+    if not SCENE_MANAGER:HasScene(sceneName) then
+        logger:Error("Scene does not exist.")
+        return
+    end
+
+    -- Button category layout information
+    local categoryLayoutInfo =
+    {
+        binding = "TOGGLE_ESO_RP_LETTERS",
+        categoryName = SI_ESO_RP_LETTERS,
+        callback = function(buttonData)
+            if not SCENE_MANAGER:IsShowing(sceneName) then
+                SCENE_MANAGER:Show(sceneName)
+            end
+        end,
+        visible = function(buttonData) return true end,
+    
+        normal = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_up.dds",
+        pressed = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_down.dds",
+        highlight = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_over.dds",
+        disabled = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_disabled.dds"
+    }
+    
+    -- Add the button to the menu
+    local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", sceneName, categoryLayoutInfo, nil)
+
+
+    -- Check if the button was added successfully
+    if result then
+        logger:Info("Game menu button created successfully")
+    else
+        logger:Error("Failed to create game menu button")
+    end
+end
+
+function EsoRpLetters.CreateScene()
+ 
+    -- Main Scene
+    ZO_Scene:New(sceneName, SCENE_MANAGER) 
+    
+    -- -- Mouse standard position and background
+    -- MYADDON_MAIN_SCENE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    -- MYADDON_MAIN_SCENE:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    
+    -- --  Background Right, it will set ZO_RightPanelFootPrint and its stuff.
+    -- MYADDON_MAIN_SCENE:AddFragment(RIGHT_BG_FRAGMENT)
+    
+    -- -- The title fragment
+    -- MYADDON_MAIN_SCENE:AddFragment(TITLE_FRAGMENT)
+    
+    -- -- Set Title
+    -- ZO_CreateStringId("SI_MYADDON_MAIN_MENU_TITLE", "My Addon Name")
+    -- MYADDON_MAIN_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_MYADDON_MAIN_MENU_TITLE)
+    -- MYADDON_MAIN_SCENE:AddFragment(MYADDON_MAIN_TITLE_FRAGMENT)
+    
+    -- -- Add the XML to our scene
+    -- MYADDON_MAIN_WINDOW = ZO_FadeSceneFragment:New(MyUINameInXML)
+    -- MYADDON_MAIN_SCENE:AddFragment(MYADDON_MAIN_WINDOW)
+    
+    
+end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
@@ -69,6 +97,8 @@ function EsoRpLetters.Initialize()
     LMM2 = LibMainMenu2
     LMM2:Init()
 
+    -- Set scene
+    EsoRpLetters.CreateScene()
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
 end
