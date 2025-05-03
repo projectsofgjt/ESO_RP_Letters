@@ -2,10 +2,16 @@ EsoRpLetters = {}
 EsoRpLetters.name = "ESO_RP_Letters"
 local logger = LibDebugLogger(EsoRpLetters.name)
 
-function EsoRpLetters.Initialize()
-    logger:Info("Initializing ESO RP Letters...")
-    -- Register the button in the Game Menu Bar
-    EsoRpLetters.CreateGameMenuButton()
+-- Function to display the RP letters panel (currently just a blank screen)
+function EsoRpLetters.ShowLetterPanel()
+    logger:Info("show letter pannel")
+    -- Create a blank screen to be replaced later with the letter list
+    local panel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_Panel")
+    panel:SetDimensions(800, 600)  -- Set size for the panel
+    panel:SetAnchor(CENTER, GuiRoot, CENTER, 0, 0)
+    panel:SetHidden(false)  -- Show the panel
+
+    -- You can customize this panel later to display the letter list
 end
 
 -- This function creates a button in the Game Menu Bar
@@ -30,18 +36,11 @@ function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Game menu button created")
 end
 
--- Function to display the RP letters panel (currently just a blank screen)
-function EsoRpLetters.ShowLetterPanel()
-    logger:Info("show letter pannel")
-    -- Create a blank screen to be replaced later with the letter list
-    local panel = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_Panel")
-    panel:SetDimensions(800, 600)  -- Set size for the panel
-    panel:SetAnchor(CENTER, GuiRoot, CENTER, 0, 0)
-    panel:SetHidden(false)  -- Show the panel
-
-    -- You can customize this panel later to display the letter list
+function EsoRpLetters.Initialize()
+    logger:Info("Initializing ESO RP Letters...")
+    -- Register the button in the Game Menu Bar
+    EsoRpLetters.CreateGameMenuButton()
 end
-
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
     if addonName == EsoRpLetters.name then
