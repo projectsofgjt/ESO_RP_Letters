@@ -1,13 +1,16 @@
 EsoRpLetters = {}
 EsoRpLetters.name = "ESO_RP_Letters"
+local logger = LibDebugLogger(EsoRpLetters.name)
 
 function EsoRpLetters.Initialize()
+    logger:Info("Initializing ESO RP Letters...")
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
 end
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
+    logger:Debug("menu button creat start")
     local panelData = {
         type = "submenu",
         name = "RP Letters",
