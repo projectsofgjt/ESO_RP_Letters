@@ -56,7 +56,6 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(TITLE_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-    menuScene:AddFragment(ZO_WindowTitleFragment:New("Letter Notebook"))
 
     menuScene:AddFragment(MENU_SOUND_CATEGORY_GAME_MENU_FRAGMENT)
     menuScene:AddFragment(BACKGROUND_FRAGMENT)
