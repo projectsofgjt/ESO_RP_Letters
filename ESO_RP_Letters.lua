@@ -1,6 +1,10 @@
 EsoRpLetters = {}
 EsoRpLetters.name = "ESO_RP_Letters"
 
+local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
+local sceneName = "EsoRpLetters"  -- Define the scene name
+local LMM2  -- We'll initialize this after the addon is loaded
+
 -- Function to display the RP letters panel (currently just a blank screen)
 function EsoRpLetters.ShowLetterPanel()
     logger:Info("show letter panel")
@@ -17,6 +21,13 @@ end
     function EsoRpLetters.CreateGameMenuButton()
         logger:Info("Creating game menu button")
 
+        -- Ensure LMM2 is initialized before proceeding
+        if not LMM2 then
+            logger:Error("LibMainMenu2 is not initialized.")
+            return
+        end
+
+        -- Button category layout information
         local categoryLayoutInfo =
         {
             binding = "TOGGLE_ESO_RP_LETTERS",
@@ -34,7 +45,8 @@ end
 			disabled = "/esoui/art/tradinghouse/tradinghouse_racial_style_motif_book_disabled.dds"
         }
         
-        LMM2:AddMenuItem("SI_ESO_RP_LETTERS", sceneName, categoryLayoutInfo, nil)
+        -- Add the button to the menu
+        local result = LMM2:AddMenuItem("SI_ESO_RP_LETTERS", sceneName, categoryLayoutInfo, nil)
 
     
         -- Check if the button was added successfully
@@ -47,11 +59,11 @@ end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
-    -- this as part of the EVENT_ADD_ON_LOADED
-    local LMM2 = LibMainMenu2
+    
+    -- Initialize LibMainMenu2 here to make sure it's ready before use
+    LMM2 = LibMainMenu2
     LMM2:Init()
-    local logger = LibDebugLogger(EsoRpLetters.name)
-    local sceneName = "EsoRpLetters"
+
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
 end
