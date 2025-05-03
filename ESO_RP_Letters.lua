@@ -9,6 +9,9 @@ local bookPanel
 local bg
 local label
 
+local panel = EsoRpLetters_ListPanel
+local titleLabel = panel:GetNamedChild("Title")
+
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
     logger:Info("Creating game menu button")
@@ -57,7 +60,7 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
 
     -- Optional: set window title
-    menuScene:AddFragment(ZO_WindowTitleFragment:New("Letter Archive"))
+    menuScene:AddFragment(ZO_WindowTitleFragment:New(titleLabel))
 end
 
 function EsoRpLetters.InitPanel()
