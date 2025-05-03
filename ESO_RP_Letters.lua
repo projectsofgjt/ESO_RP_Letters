@@ -87,18 +87,8 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
-            -- Save current view mode
-            EsoRpLetters.wasThirdPerson = not IsFirstPersonCamera()
-            -- Switch to first-person
-            if EsoRpLetters.wasThirdPerson then
-                ToggleFirstPerson()
-            end
             PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
         elseif newState == SCENE_HIDDEN then
-            -- Restore previous view
-            if EsoRpLetters.wasThirdPerson then
-                ToggleFirstPerson()
-            end
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
