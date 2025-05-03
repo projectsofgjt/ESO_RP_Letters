@@ -10,7 +10,7 @@ end
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
-    logger:Debug("menu button creat start")
+    logger:Info("menu button creat start")
     local panelData = {
         type = "submenu",
         name = "RP Letters",
@@ -26,7 +26,7 @@ function EsoRpLetters.CreateGameMenuButton()
 
     -- Optionally, you can create a simple menu entry using `LibAddonMenu` as well.
     -- This is just a placeholder for later when we need to load the letters
-    logger:Debug("menu button created")
+    logger:Info("menu button created")
 end
 
 -- Function to display the RP letters panel (currently just a blank screen)
