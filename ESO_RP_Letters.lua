@@ -78,7 +78,6 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     menuScene:AddFragment(ZO_FadeSceneFragment:New(bookPanel)) -- Add the panel to your custom scene
     menuScene:AddFragment(UI_SHORTCUTS_ACTION_LAYER_FRAGMENT) -- input lock helper
-    menuScene:AddFragment(FRAME_EMOTE_FRAGMENT)
   
     
     logger.Info("init pannels end");
