@@ -70,7 +70,7 @@ function EsoRpLetters.InitScene()
     bg:SetCenterTexture("/esoui/art/book/book_background.dds", 8, 8)
 
     -- Open book texture (replace with your actual open book texture)
-    bg:SetCenterTexture("/esoui/art/book/book_opened.dds", 8, 8)  -- Example texture
+    bg:SetCenterTexture("/esoui/art/lorelibrary/lorelibrary_paperbook.dds", 8, 8)  -- Example texture
 
     -- Add a simple label (for demo/testing)
     label = WINDOW_MANAGER:CreateControl("$(parent)_Label", bookPanel, CT_LABEL)
