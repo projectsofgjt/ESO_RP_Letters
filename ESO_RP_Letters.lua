@@ -5,9 +5,9 @@ local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
 local menuSceneName = "EsoRpLetters"  -- Define the scene name
 local menuScene -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
-local bookPanel
-local bg
-local label
+local EsoRpLettersControl 
+local backdrop
+
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
@@ -55,9 +55,15 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(TITLE_FRAGMENT)
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+    
+    
+    -- Build control from xml
+    EsoRpLettersControl = WINDOW_MANAGER:GetControlByName("EsoRpLettersControl")
+    menuScene:AddFragment(ZO_FadeSceneFragment:New(EsoRpLettersControl))
+    menuScene:AddFragment(ZO_WindowTitleFragment:New(EsoRpLettersControl))
 
-    -- Optional: set window title
-    -- menuScene:AddFragment(ZO_WindowTitleFragment:New(titleLabel))
+    backdrop = GetControl(EsoRpLettersControl, "BG")
+
 end
 
 function EsoRpLetters.InitPanel()
