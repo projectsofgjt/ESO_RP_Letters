@@ -8,18 +8,6 @@ local LMM2  -- We'll initialize this after the addon is loaded
 local bookPanel
 local bg
 local label
--- Add a blurred background layer (simulates depth of field blur)
-local blur = WINDOW_MANAGER:CreateTopLevelWindow("EsoRpLetters_BlurBackdrop")
-blur:SetAnchorFill()
-blur:SetDrawLayer(DL_BACKGROUND)
-blur:SetDrawTier(DT_LOW)
-blur:SetHidden(true)
-
-local blurTex = WINDOW_MANAGER:CreateControl("$(parent)_Tex", blur, CT_TEXTURE)
-blurTex:SetAnchorFill()
-blurTex:SetTexture("/esoui/art/miscellaneous/blurred_background.dds")
-blurTex:SetAlpha(0.6) -- Tune this for strength
-blurTex:SetBlendMode(TEX_BLEND_MODE_ALPHA)
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
@@ -98,10 +86,8 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
-            blur:SetHidden(false)
             PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
         elseif newState == SCENE_HIDDEN then
-            blur:SetHidden(true)
             RemoveActionLayerByName("SceneActionLayer")
         end
     end)
