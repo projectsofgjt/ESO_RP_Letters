@@ -60,7 +60,12 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
 
-
+    -- Delay panel init until scene is ready
+    menuScene:RegisterCallback("StateChange", function(oldState, newState)
+        if newState == SCENE_SHOWING and not EsoRpLetters.scrollList then
+            EsoRpLetters.InitPanel()
+        end
+    end)
 
 end
 
@@ -88,7 +93,7 @@ function EsoRpLetters.InitPanel()
         logger:Error("ZO_RightPanelFootPrint not found, cannot create scroll list")
         return
     end
-    
+
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
     -- list:SetAnchorFill()
 
@@ -121,12 +126,11 @@ end
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
-    EsoRpLetters.InitScene();
-    EsoRpLetters.InitPanel()
-    ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
+    EsoRpLetters.InitScene()
+    ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book")
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
-    EsoRpLetters.initStateChanges();
+    EsoRpLetters.initStateChanges()
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
