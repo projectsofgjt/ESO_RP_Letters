@@ -118,11 +118,7 @@ end
 
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
-        if newState == SCENE_SHOWING then
-            PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
-        elseif newState == SCENE_HIDDEN then
-            RemoveActionLayerByName("SceneActionLayer")
-        end
+        LMM:ToggleCategory(MENU_CATEGORY_MYADDON)
     end)
 end
 
