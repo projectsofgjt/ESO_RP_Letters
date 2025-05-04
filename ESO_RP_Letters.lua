@@ -67,20 +67,16 @@ end
 function EsoRpLetters.InitPanel()
     logger:Info("init panel start")
 
-    logger:Info("ZO_RightPanel exists: " .. tostring(mainControl))
-    -- Check if the mainControl is properly initialized
-    if mainControl == nil then
-        logger:Error("ZO_RightPanel is nil! Could not find the mainControl!")
-        return
-    end
-
     -- Create the scroll list control as a child of maincontrol
+    logger:Info("make scroll list control")
     list = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, "ZO_ScrollList")
+    logger:Info("run ZO_scrollist one it somehow")
     ZO_ScrollList_Setup(list)
     list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
     list:SetDimensions(600, 400)
     list:SetHidden(false)
 
+    logger:Info("add data type")
     -- Setup the list
     ZO_ScrollList_AddDataType(list, 1, nil, 30, function(control, data)
         -- Create the label once
