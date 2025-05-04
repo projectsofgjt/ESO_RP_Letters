@@ -12,6 +12,7 @@ local list
 local container
 local items
 local scrollData 
+local panelInitialized = false
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
@@ -67,7 +68,7 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
     container = ZO_RightPanelFootPrint
-    
+
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
     list:SetAnchorFill()
 
@@ -102,6 +103,10 @@ function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
             PushActionLayerByName("SceneActionLayer")
+            if not EsoRpLetters.panelInitialized then
+                EsoRpLetters.InitPanel()
+                EsoRpLetters.panelInitialized = true
+            end
         elseif newState == SCENE_HIDDEN then
             RemoveActionLayerByName("SceneActionLayer")
         end
@@ -116,7 +121,6 @@ function EsoRpLetters.Initialize()
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
     EsoRpLetters.initStateChanges()
-    EsoRpLetters.InitPanel()
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
