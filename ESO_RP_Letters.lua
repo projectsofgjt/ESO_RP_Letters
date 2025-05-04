@@ -73,7 +73,7 @@ function EsoRpLetters.initStateChanges()
 end
 
 
-function EsoRpLetters.Initialize(control)
+function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
     EsoRpLetters.InitScene();
