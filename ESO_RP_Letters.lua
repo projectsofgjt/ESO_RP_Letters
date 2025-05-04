@@ -5,7 +5,7 @@ local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
 local menuSceneName = "EsoRpLetters"  -- Define the scene name
 local menuScene -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
-local EsoRpLettersControl 
+local EsoRpLettersWindow 
 local backdrop
 
 
@@ -49,13 +49,24 @@ end
 
 function EsoRpLetters.InitScene()
     logger.Info("init scene start");
-    -- menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
-    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
-    -- menuScene:AddFragment(TITLE_FRAGMENT)
-    -- menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-    -- menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
+    -- Mouse standard position and background
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    --  Background Right, it will set ZO_RightPanelFootPrint and its stuff.
+    menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+
+    -- The title fragment
+    menuScene:AddFragment(TITLE_FRAGMENT)
     
+    -- Set Title
+    ZO_CreateStringId("SI_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
+    local MYADDON_MAIN_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_ESO_RP_LETTERS_DISPLAY)
+    menuScene:AddFragment(MYADDON_MAIN_TITLE_FRAGMENT)
+    
+    -- Add the XML to our scene
+    EsoRpLettersWindow = ZO_FadeSceneFragment:New("EsoRpLettersControl")
+    menuScene:AddFragment(EsoRpLettersWindow)
 end
 
 function EsoRpLetters.InitPanel()
@@ -77,7 +88,7 @@ function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
     EsoRpLetters.InitScene();
-    ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
+    
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
     EsoRpLetters.initStateChanges();
