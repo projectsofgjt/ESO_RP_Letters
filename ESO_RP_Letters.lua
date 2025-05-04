@@ -60,9 +60,8 @@ function EsoRpLetters.InitScene()
     -- Build control from xml
     EsoRpLettersControl = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersControl", GuiRoot, "EsoRpLettersControl")
     menuScene:AddFragment(ZO_FadeSceneFragment:New(EsoRpLettersControl))
-    menuScene:AddFragment(ZO_WindowTitleFragment:New(EsoRpLettersControl))
 
-    backdrop = GetControl(EsoRpLettersControl, "BG")
+    menuScene:AddFragment(ZO_WindowTitleFragment:New(EsoRpLettersControl:GetNamedChild("Title")))
 
 end
 
