@@ -9,7 +9,7 @@ local bookPanel
 local bg
 local label
 local list
-local container
+local mainControl
 local items
 local scrollData 
 local panelInitialized = false
@@ -48,7 +48,7 @@ function EsoRpLetters.CreateGameMenuButton()
     
     -- Add the button to the menu
     LMM2:AddMenuItem(menuSceneName, menuSceneName, categoryLayoutInfo, nil)
-
+    mainControl = LMM2:GetControl()  
     logger:Info("Game menu button created successfully")
 end
 
@@ -67,19 +67,15 @@ end
 function EsoRpLetters.InitPanel()
     logger:Info("init panel start")
 
-    -- Create the scroll list control as a child of ZO_RightPanel (the default container for the right panel in this fragment)
-    local container = ZO_RightPanel  -- Corrected reference to ZO_RightPanel
-
-    -- Check if the container is properly initialized
-    if container == nil then
-        logger:Error("ZO_RightPanel is nil! Could not find the container!")
+    logger:Info("ZO_RightPanel exists: " .. tostring(mainControl))
+    -- Check if the mainControl is properly initialized
+    if mainControl == nil then
+        logger:Error("ZO_RightPanel is nil! Could not find the mainControl!")
         return
     end
 
-    logger:Info("ZO_RightPanel exists: " .. tostring(container))
-
     -- Create the scroll list control as a child of ZO_RightPanel
-    list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
+    list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", mainControl, "ZO_ScrollList")
     EsoRpLetters.scrollList = list  -- Save reference for later
 
     -- Setup the list
