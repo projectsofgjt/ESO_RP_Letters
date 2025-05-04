@@ -9,7 +9,7 @@ local ESO_RP_LETTERS_MAIN_WINDOW
 
 
 -- This function creates a button in the Game Menu Bar
-function ESO_RP_LETTERS.init()
+function ESO_RP_LETTERS.initData()
     logger:Info("Creating game menu button")
 
     -- Build the Menu
