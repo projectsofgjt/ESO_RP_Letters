@@ -3,74 +3,117 @@ EsoRpLetters.name = "ESO_RP_Letters"
 
 local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
 local menuSceneName = "EsoRpLetters"  -- Define the scene name
-local menuScene -- We'll initialize this after the addon is loaded
+local ESO_RP_LETTERS_MAIN_SCENE -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
-local EsoRpLettersWindow 
-local backdrop
+local ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT 
+local ESO_RP_LETTERS_MAIN_WINDOW
 
 
 -- This function creates a button in the Game Menu Bar
-function EsoRpLetters.CreateGameMenuButton()
+function EsoRpLetters.init()
     logger:Info("Creating game menu button")
 
-    -- Initialize librarys and needed high scope vairables
-    LMM2 = LibMainMenu2
-    LMM2:Init()
-
-    -- Ensure LMM2 is initialized before proceeding
-    if not LMM2 then
-        logger:Error("LibMainMenu2 is not initialized.")
-        return
-    end
-
-    -- Button category layout information
-    local categoryLayoutInfo =
-    {
-        binding = "TOGGLE_ESO_RP_LETTERS",
-        categoryName = STRID_ESO_RP_LETTERS_DISPLAY,
-        callback = function(buttonData)
-            if not SCENE_MANAGER:IsShowing(menuSceneName) then
-                SCENE_MANAGER:Show(menuSceneName)
-            end
-        end,
-        visible = function(buttonData) return true end,
+    -- Build the Menu
+    -- Its name for the menu (the meta scene)
+    ZO_CreateStringId("SI_ESO_RP_LETTERS_MAIN_MENU_TITLE", "Letter Notebook")
     
+    -- Its infos,
+    ZO_CreateStringId("SI_BINDING_NAME_ESO_RP_LETTERS_SHOW_PANEL", "Toggle letter notebook") -- you also need to use a bindings.xml in order to display your keybind in options.
+    ESO_RP_LETTERS_MAIN_MENU_CATEGORY_DATA =
+    {
+        binding = "ESO_RP_LETTERS_SHOW_PANEL",
+        categoryName = SI_ESO_RP_LETTERS_MAIN_MENU_TITLE,
         normal = "/esoui/art/icons/housing_bre_inc_book_closed002.dds",
         pressed = "/esoui/art/icons/housing_bre_inc_book_closed002.dds",
         highlight = "/esoui/art/icons/housing_bre_inc_book_closed002.dds",
         disabled = "/esoui/art/icons/quest_murkmire_captain_hostias_journal"
     }
     
-    -- Add the button to the menu
-    LMM2:AddMenuItem(menuSceneName, menuSceneName, categoryLayoutInfo, nil)
+    -- Then the scenes
+    
+    -- Main Scene is created trought our function described in 1st section
+    ESO_RP_LETTERS.CreateScene()
+    
+    -- Another Scene , because using main menu without having 2 scenes should be avoided.
+    ESO_RP_LETTERS_ANOTHER_SCENE = ZO_Scene:New("ESO_RP_LETTERSAnother", SCENE_MANAGER)   
+    
+    -- Mouse standard position and background
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    
+    --  Background Right, it will set ZO_RightPanelFootPrint and its stuff.
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragment(RIGHT_BG_FRAGMENT)
+    
+    -- The title fragment
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragment(TITLE_FRAGMENT)
+    
+    -- Set Title
+    ZO_CreateStringId("SI_ESO_RP_LETTERS_IMPORT_MENU_TITLE", "Another title")
+    ESO_RP_LETTERS_ANOTHER_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_ESO_RP_LETTERS_MAIN_MENU_TITLE) -- The title at the left of the scene is the "global one" but we can change it
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragment(ESO_RP_LETTERS_ANOTHER_TITLE_FRAGMENT)
+    
+    -- Add the XML to our scene
+    ESO_RP_LETTERS_ANOTHER_WINDOW = ZO_FadeSceneFragment:New(AnotherPieceofXML)
+    ESO_RP_LETTERS_ANOTHER_SCENE:AddFragment(ESO_RP_LETTERS_ANOTHER_WINDOW)
+ 
+    -- Set tabs and visibility, etc
+    
+    do
+        local iconData = {
+            {
+                categoryName = SI_ESO_RP_LETTERS_MAIN_MENU_TITLE, -- the title at the right (near the buttons)
+                descriptor = "ESO_RP_LETTERSMain",
+                normal = "EsoUI/Art/MainMenu/menuBar_champion_up.dds",
+                pressed = "EsoUI/Art/MainMenu/menuBar_champion_down.dds",
+                highlight = "EsoUI/Art/MainMenu/menuBar_champion_over.dds",
+            },
+            {
+                categoryName = SI_ESO_RP_LETTERS_ANOTHER_MENU_TITLE, -- the title at the right (near the buttons)
+                visible = function() return IsChampionSystemUnlocked() end, -- is tab visible ?
+                descriptor = "ESO_RP_LETTERSAnother",
+                normal = "EsoUI/Art/Guild/tabicon_history_up.dds",
+                pressed = "EsoUI/Art/Guild/tabicon_history_down.dds",
+                highlight = "EsoUI/Art/Guild/tabicon_history_over.dds",
+            },
+        }
+        
+        -- Register Scenes and the group name
+        SCENE_MANAGER:AddSceneGroup("ESO_RP_LETTERSSceneGroup", ZO_SceneGroup:New("ESO_RP_LETTERSMain", "ESO_RP_LETTERSAnother"))
+        
+        -- ZOS have hardcoded its categories, so here is LibMainMenu utility.
+        MENU_CATEGORY_ESO_RP_LETTERS = LMM:MainMenuAddCategory(ESO_RP_LETTERS_MAIN_MENU_CATEGORY_DATA)
+        
+        -- Register the group and add the buttons
+        LMM:MainMenuAddSceneGroup(MENU_CATEGORY_ESO_RP_LETTERS, "ESO_RP_LETTERSSceneGroup", iconData)
+        
+    end
 
     logger:Info("Game menu button created successfully")
 end
 
-function EsoRpLetters.InitScene()
+function EsoRpLetters.CreateScene()
     logger.Info("init scene start");
-    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
+    -- Main Scene
+    ESO_RP_LETTERS_MAIN_SCENE = ZO_Scene:New("ESO_RP_LETTERSMain", SCENE_MANAGER) 
+    
     -- Mouse standard position and background
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    
     --  Background Right, it will set ZO_RightPanelFootPrint and its stuff.
-    menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragment(RIGHT_BG_FRAGMENT)
+    
     -- The title fragment
-    menuScene:AddFragment(TITLE_FRAGMENT)
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragment(TITLE_FRAGMENT)
     
     -- Set Title
-    ZO_CreateStringId("SI_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
-    local MYADDON_MAIN_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_ESO_RP_LETTERS_DISPLAY)
-    menuScene:AddFragment(MYADDON_MAIN_TITLE_FRAGMENT)
+    ZO_CreateStringId("SI_ESO_RP_LETTERS_MAIN_MENU_TITLE", "My Addon Name")
+    ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT = ZO_SetTitleFragment:New(SI_ESO_RP_LETTERS_MAIN_MENU_TITLE)
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragment(ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT)
     
     -- Add the XML to our scene
-    EsoRpLettersWindow = ZO_FadeSceneFragment:New("EsoRpLettersControl")
-    menuScene:AddFragment(EsoRpLettersWindow)
-end
-
-function EsoRpLetters.InitPanel()
-    logger.Info("init panel start");
+    ESO_RP_LETTERS_MAIN_WINDOW = ZO_FadeSceneFragment:New(MyUINameInXML)
+    ESO_RP_LETTERS_MAIN_SCENE:AddFragment(ESO_RP_LETTERS_MAIN_WINDOW)
 end
 
 function EsoRpLetters.initStateChanges()
@@ -86,12 +129,6 @@ end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
-    -- Set scene
-    EsoRpLetters.InitScene();
-    
-    -- Register the button in the Game Menu Bar
-    EsoRpLetters.CreateGameMenuButton()
-    EsoRpLetters.initStateChanges();
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
