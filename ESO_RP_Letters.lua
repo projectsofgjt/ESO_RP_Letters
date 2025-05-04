@@ -95,7 +95,7 @@ function EsoRpLetters.InitPanel()
     end
 
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
-    -- list:SetAnchorFill()
+    list:SetAnchorFill()
 
     EsoRpLetters.scrollList = list  -- Save reference for later
 

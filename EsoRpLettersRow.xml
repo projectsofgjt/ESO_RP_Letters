@@ -1,13 +1,15 @@
 <GuiXml>
     <Controls>
-        <Control name="EsoRpLettersRow" virtual="true" inherits="ZO_SelectableLabel">
+        <Control name="EsoRpLettersRow" virtual="true" inherits="ZO_Control">
             <Dimensions x="600" y="30"/>
-            <Font>ZoFontGame</Font>
             <OnMouseEnter>ZO_ScrollList_MouseEnter</OnMouseEnter>
             <OnMouseExit>ZO_ScrollList_MouseExit</OnMouseExit>
             <OnMouseUp>ZO_ScrollList_MouseClick</OnMouseUp>
             <Controls>
-                <Label name="$(parent)Label" inherits="ZO_SelectableLabel" />
+                <Label name="$(parent)Label" inherits="ZO_SelectableLabel">
+                    <Font>ZoFontGame</Font>
+                    <Anchor point="CENTER"/>
+                </Label>
             </Controls>
         </Control>
     </Controls>
