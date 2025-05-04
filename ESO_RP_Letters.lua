@@ -8,6 +8,10 @@ local LMM2  -- We'll initialize this after the addon is loaded
 local bookPanel
 local bg
 local label
+local list
+local container
+local items
+local scrollData 
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
@@ -78,8 +82,8 @@ function EsoRpLetters.InitPanel()
     logger.Info("init panel start")
 
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
-    local container = ZO_RightPanelFootPrint
-    local list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
+    container = ZO_RightPanelFootPrint
+    list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
     list:SetAnchorFill()
 
     EsoRpLetters.scrollList = list  -- Save reference for later
@@ -93,12 +97,12 @@ function EsoRpLetters.InitPanel()
     ZO_ScrollList_SetEqualityFunction(list, 1, function(left, right) return left.id == right.id end)
 
     -- Populate it with example data
-    local items = {}
+    items = {}
     for i = 1, 10 do
         table.insert(items, { id = i, text = "Letter " .. i })
     end
 
-    local scrollData = ZO_ScrollList_GetDataList(list)
+    scrollData = ZO_ScrollList_GetDataList(list)
     ZO_ClearNumericallyIndexedTable(scrollData)
 
     for _, entry in ipairs(items) do
