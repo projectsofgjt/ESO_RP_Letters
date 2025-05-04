@@ -60,13 +60,6 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
 
-    -- Delay panel init until scene is ready
-    menuScene:RegisterCallback("StateChange", function(oldState, newState)
-        if newState == SCENE_SHOWING and not EsoRpLetters.scrollList then
-            EsoRpLetters.InitPanel()
-        end
-    end)
-
 end
 
 function EsoRpLetters.InitPanel()
@@ -76,7 +69,14 @@ end
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
-            PushActionLayerByName("SceneActionLayer")  -- Disables movement and combat
+            PushActionLayerByName("SceneActionLayer")
+
+            -- Lazy-initialize the panel here
+            if not EsoRpLetters.panelInitialized then
+                EsoRpLetters.InitPanel()
+                EsoRpLetters.panelInitialized = true
+            end
+
         elseif newState == SCENE_HIDDEN then
             RemoveActionLayerByName("SceneActionLayer")
         end
