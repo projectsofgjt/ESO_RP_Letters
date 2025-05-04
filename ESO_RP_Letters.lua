@@ -12,7 +12,7 @@ local list = {}
 local mainControl
 local items
 local scrollData 
-local panelInitialized = false
+local LibCustomMenu = LibCustomMenu or {}
 
 -- This function creates a button in the Game Menu Bar
 function EsoRpLetters.CreateGameMenuButton()
@@ -64,64 +64,33 @@ function EsoRpLetters.InitScene()
 
 end
 
-function EsoRpLetters.InitPanel()
-    logger:Info("init panel start")
+function EsoRpLetters.createLettersMenu()
+    -- Define the menu's entries
+    local menuEntries = {
+        { name = "Letter 1", callback = function() 
+            -- Action for Letter 1
+            d("You clicked Letter 1")
+        end },
+        { name = "Letter 2", callback = function() 
+            -- Action for Letter 2
+            d("You clicked Letter 2")
+        end },
+        { name = "Letter 3", callback = function() 
+            -- Action for Letter 3
+            d("You clicked Letter 3")
+        end },
+    }
 
-    -- Create the scroll list control as a child of maincontrol
-    logger:Info("make scroll list control")
-    list.control = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, CT_CONTROL)
-    list.control:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
-    list.control:SetDimensions(600, 400)
-
-    -- Create the "Scroll" child control, which will be the scrollable area
-    list.scrollControl = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersScroll", list.control, "ZO_ScrollContainer")
-    list.scrollControl:SetDimensions(400, 260)
-    list.scrollControl:SetAnchor(TOPLEFT, list.control, TOPLEFT, 0, 0)
-
-    logger:Info("run ZO_scrollist one it somehow")
-    ZO_ScrollList_Initialize(list)
-    
-    list:SetHidden(false)
-
-    logger:Info("add data type")
-    -- Setup the list
-    ZO_ScrollList_AddDataType(list.scrollControl, 1, nil, 30, function(control, data)
-        -- Create the label once
-        if not control.label then
-            control.label = WINDOW_MANAGER:CreateControl(nil, control, CT_LABEL)
-            control.label:SetFont("ZoFontGame")
-            control.label:SetAnchor(LEFT, control, LEFT, 10, 0)
-            control.label:SetDimensions(580, 30)
-        end
-    
-        control.label:SetText(data.text)
-    end)
-
-    -- Populate it with example data
-    items = {}
-    for i = 1, 10 do
-        logger:Info("fake letter: " .. i)
-        table.insert(items, { id = i, text = "Letter " .. i })
-    end
-
-    scrollData = ZO_ScrollList_GetDataList(list)
-    ZO_ClearNumericallyIndexedTable(scrollData)
-
-    for _, entry in ipairs(items) do
-        logger:Info("shove to sroll table: " .. i)
-        table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, entry))
-    end
-
-    ZO_ScrollList_Commit(list.scrollControl)
+    -- Use LibCustomMenu to create a menu with the entries
+    LibCustomMenu:OpenMenu(menuEntries)
 end
-
 
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         if newState == SCENE_SHOWING then
             PushActionLayerByName("SceneActionLayer")
             if not EsoRpLetters.panelInitialized then
-                EsoRpLetters.InitPanel()
+                EsoRpLetters.createLettersMenu()()
                 EsoRpLetters.panelInitialized = true
             end
         elseif newState == SCENE_HIDDEN then
