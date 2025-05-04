@@ -65,27 +65,21 @@ function EsoRpLetters.InitScene()
 end
 
 function EsoRpLetters.InitPanel()
-    logger.Info("init panel start")
+    logger:Info("init panel start")
 
-    -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
-    container = ZO_RightPanelFootPrint
+    -- Create the scroll list control as a child of ZO_RightPanel (the default container for the right panel in this fragment)
+    local container = ZO_RightPanel  -- Corrected reference to ZO_RightPanel
 
-    -- Debugging: Log if container exists or not
+    -- Check if the container is properly initialized
     if container == nil then
-        if menuScene then
-            logger:Info("menuScene fragment groups: " .. tostring(menuScene:GetFragmentGroups()))
-            -- logger:Info("menuScene fragment groups: " .. menuScene:GetFragmentGroups())
-        end
-        logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
-
+        logger:Error("ZO_RightPanel is nil! Could not find the container!")
         return
     end
 
-    logger:Info("ZO_RightPanelFootPrint: " .. tostring(ZO_RightPanelFootPrint))
+    logger:Info("ZO_RightPanel exists: " .. tostring(container))
 
+    -- Create the scroll list control as a child of ZO_RightPanel
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
-    -- list:SetAnchorFill()
-
     EsoRpLetters.scrollList = list  -- Save reference for later
 
     -- Setup the list
@@ -99,7 +93,7 @@ function EsoRpLetters.InitPanel()
     -- Populate it with example data
     items = {}
     for i = 1, 10 do
-        logger.Info("fake letter: " .. i)
+        logger:Info("fake letter: " .. i)
         table.insert(items, { id = i, text = "Letter " .. i })
     end
 
@@ -112,6 +106,7 @@ function EsoRpLetters.InitPanel()
 
     ZO_ScrollList_Commit(list)
 end
+
 
 function EsoRpLetters.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
