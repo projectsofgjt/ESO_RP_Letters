@@ -67,12 +67,7 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
     container = ZO_RightPanelFootPrint
-
-    if not container then
-        logger:Error("ZO_RightPanelFootPrint not found, cannot create scroll list")
-        return
-    end
-
+    
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
     list:SetAnchorFill()
 
