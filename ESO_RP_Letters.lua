@@ -1,8 +1,7 @@
-EsoRpLetters = {}
-EsoRpLetters.name = "ESO_RP_Letters"
+ESO_RP_LETTERS = {}
+ESO_RP_LETTERS.name = "ESO_RP_Letters"
 
 local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
-local menuSceneName = "EsoRpLetters"  -- Define the scene name
 local ESO_RP_LETTERS_MAIN_SCENE -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
 local ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT 
