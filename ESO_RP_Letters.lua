@@ -69,7 +69,7 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of maincontrol
     logger:Info("make scroll list control")
-    list = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, "ZO_ScrollList")
+    list = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, CT_CONTROL)
     logger:Info("run ZO_scrollist one it somehow")
     ZO_ScrollList_Setup(list)
     list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
