@@ -63,27 +63,6 @@ function EsoRpLetters.InitScene()
 end
 
 function EsoRpLetters.InitPanel()
-    logger.Info("init panel start");
-end
-
-function EsoRpLetters.initStateChanges()
-    menuScene:RegisterCallback("StateChange", function(oldState, newState)
-        if newState == SCENE_SHOWING then
-            PushActionLayerByName("SceneActionLayer")
-
-            -- Lazy-initialize the panel here
-            if not EsoRpLetters.panelInitialized then
-                EsoRpLetters.InitPanel()
-                EsoRpLetters.panelInitialized = true
-            end
-
-        elseif newState == SCENE_HIDDEN then
-            RemoveActionLayerByName("SceneActionLayer")
-        end
-    end)
-end
-
-function EsoRpLetters.InitPanel()
     logger.Info("init panel start")
 
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
@@ -124,6 +103,16 @@ function EsoRpLetters.InitPanel()
     ZO_ScrollList_Commit(list)
 end
 
+function EsoRpLetters.initStateChanges()
+    menuScene:RegisterCallback("StateChange", function(oldState, newState)
+        if newState == SCENE_SHOWING then
+            PushActionLayerByName("SceneActionLayer")
+        elseif newState == SCENE_HIDDEN then
+            RemoveActionLayerByName("SceneActionLayer")
+        end
+    end)
+end
+
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
@@ -132,6 +121,7 @@ function EsoRpLetters.Initialize()
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()
     EsoRpLetters.initStateChanges()
+    EsoRpLetters.InitPanel()
 end
 
 function EsoRpLetters.OnAddOnLoaded(event, addonName)
