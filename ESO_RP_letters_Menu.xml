@@ -1,0 +1,22 @@
+<GuiXml>
+  <Controls>
+    <TopLevelControl name="EsoRpLetters_ListPanel" movable="true" mouseEnabled="true" clampedToScreen="true" hidden="true">
+      <Anchor point="CENTER"/>
+      <Dimensions x="1000" y="700"/>
+      <Controls>
+        <Label name="$(parent)Title" font="ZoFontWinH1" text="Letter Archive">
+          <Anchor point="TOP" offsetY="20"/>
+        </Label>
+
+        <Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop">
+          <AnchorFill/>
+        </Backdrop>
+
+        <Control name="$(parent)ScrollList" inherits="ZO_ScrollList">
+          <Anchor point="TOPLEFT" offsetX="20" offsetY="60"/>
+          <Anchor point="BOTTOMRIGHT" offsetX="-20" offsetY="-20"/>
+        </Control>
+      </Controls>
+    </TopLevelControl>
+  </Controls>
+</GuiXml>
