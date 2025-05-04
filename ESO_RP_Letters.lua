@@ -55,6 +55,7 @@ end
 function EsoRpLetters.InitScene()
     logger.Info("init scene start");
     menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
+    
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
     menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
     menuScene:AddFragment(TITLE_FRAGMENT)
@@ -68,6 +69,12 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
     container = ZO_RightPanelFootPrint
+
+    -- Debugging: Log its state
+    if container == nil then
+        logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
+        return
+    end
 
     logger:Info("ZO_RightPanelFootPrint: " .. tostring(ZO_RightPanelFootPrint))
 
