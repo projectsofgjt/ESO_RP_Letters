@@ -70,10 +70,13 @@ function EsoRpLetters.InitPanel()
     -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
     container = ZO_RightPanelFootPrint
 
-    -- Debugging: Log its state
+    -- Debugging: Log if container exists or not
     if container == nil then
-        logger:Info("ZO_RightPanelFootPrint: " .. tostring(menuScene))
         logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
+        -- Adding info about the scene fragment groups being used
+        if menuScene then
+            logger:Info("menuScene fragment groups: " .. tostring(menuScene:GetFragmentGroups()))
+        end
         return
     end
 
