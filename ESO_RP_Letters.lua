@@ -82,7 +82,9 @@ function EsoRpLetters.createLettersMenu()
     }
 
     -- Use LibCustomMenu to create a menu with the entries
-    LibCustomMenu:OpenMenu(menuEntries)
+    ClearMenu()
+    AddCustomSubMenuItem("Sub Menu", entries)
+    ShowMenu()
 end
 
 function EsoRpLetters.initStateChanges()
