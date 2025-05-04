@@ -72,11 +72,12 @@ function EsoRpLetters.InitPanel()
 
     -- Debugging: Log if container exists or not
     if container == nil then
-        logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
-        -- Adding info about the scene fragment groups being used
         if menuScene then
             logger:Info("menuScene fragment groups: " .. tostring(menuScene:GetFragmentGroups()))
+            logger:Info("menuScene fragment groups: " .. menuScene:GetFragmentGroups())
         end
+        logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
+
         return
     end
 
