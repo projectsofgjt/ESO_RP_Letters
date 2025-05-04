@@ -76,6 +76,9 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of ZO_RightPanel
     list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", mainControl, "ZO_ScrollList")
+    list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
+    list:SetDimensions(600, 400)
+    list:SetHidden(false)
     EsoRpLetters.scrollList = list  -- Save reference for later
 
     -- Setup the list
