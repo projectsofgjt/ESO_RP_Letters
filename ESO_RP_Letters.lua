@@ -73,7 +73,7 @@ function EsoRpLetters.InitPanel()
     list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
     list:SetDimensions(600, 400)
     logger:Info("run ZO_scrollist one it somehow")
-    ZO_ScrollList_Initialize(mainControl)
+    ZO_ScrollList_Initialize(self)
     
     list:SetHidden(false)
 
