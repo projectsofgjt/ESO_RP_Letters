@@ -111,7 +111,7 @@ function ESO_RP_LETTERS.CreateScene()
     ESO_RP_LETTERS_MAIN_SCENE:AddFragment(ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT)
     
     -- Add the XML to our scene
-    ESO_RP_LETTERS_MAIN_WINDOW = ZO_FadeSceneFragment:New(MyUINameInXML)
+    ESO_RP_LETTERS_MAIN_WINDOW = ZO_FadeSceneFragment:New("EsoRpLetters")
     ESO_RP_LETTERS_MAIN_SCENE:AddFragment(ESO_RP_LETTERS_MAIN_WINDOW)
 end
 
