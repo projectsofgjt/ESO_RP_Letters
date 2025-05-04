@@ -74,20 +74,23 @@ function EsoRpLetters.InitPanel()
         return
     end
 
-    -- Create the scroll list control as a child of ZO_RightPanel
-    list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", mainControl, "ZO_ScrollList")
+    -- Create the scroll list control as a child of maincontrol
+    list = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, "ZO_ScrollList")
+    ZO_ScrollList_Setup(list)
     list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
     list:SetDimensions(600, 400)
     list:SetHidden(false)
-    EsoRpLetters.scrollList = list  -- Save reference for later
 
     -- Setup the list
     ZO_ScrollList_AddDataType(list, 1, nil, 30, function(control, data)
+        -- Create the label once
         if not control.label then
             control.label = WINDOW_MANAGER:CreateControl(nil, control, CT_LABEL)
             control.label:SetFont("ZoFontGame")
             control.label:SetAnchor(LEFT, control, LEFT, 10, 0)
+            control.label:SetDimensions(580, 30)
         end
+    
         control.label:SetText(data.text)
     end)
 
