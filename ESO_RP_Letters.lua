@@ -110,6 +110,7 @@ function EsoRpLetters.InitPanel()
     -- Populate it with example data
     items = {}
     for i = 1, 10 do
+        logger.Info("fake letter: " .. i)
         table.insert(items, { id = i, text = "Letter " .. i })
     end
 
