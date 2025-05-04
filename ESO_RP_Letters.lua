@@ -6,6 +6,11 @@ local ESO_RP_LETTERS_MAIN_SCENE -- We'll initialize this after the addon is load
 local LMM2  -- We'll initialize this after the addon is loaded
 local ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT 
 local ESO_RP_LETTERS_MAIN_WINDOW
+local ESO_RP_LETTERS_MAIN_MENU_CATEGORY_DATA
+local ESO_RP_LETTERS_ANOTHER_SCENE
+local ESO_RP_LETTERS_ANOTHER_TITLE_FRAGMENT
+local ESO_RP_LETTERS_ANOTHER_WINDOW
+local MENU_CATEGORY_ESO_RP_LETTERS
 
 
 -- This function creates a button in the Game Menu Bar
@@ -56,6 +61,8 @@ function ESO_RP_LETTERS.initData()
     ESO_RP_LETTERS_ANOTHER_SCENE:AddFragment(ESO_RP_LETTERS_ANOTHER_WINDOW)
  
     -- Set tabs and visibility, etc
+
+    ZO_CreateStringId("SI_ESO_RP_LETTERS_ANOTHER_MENU_TITLE", "Another thing")
     
     do
         local iconData = {
