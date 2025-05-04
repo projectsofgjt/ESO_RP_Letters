@@ -74,7 +74,7 @@ function EsoRpLetters.InitPanel()
     if container == nil then
         if menuScene then
             logger:Info("menuScene fragment groups: " .. tostring(menuScene:GetFragmentGroups()))
-            logger:Info("menuScene fragment groups: " .. menuScene:GetFragmentGroups())
+            -- logger:Info("menuScene fragment groups: " .. menuScene:GetFragmentGroups())
         end
         logger:Error("ZO_RightPanelFootPrint is still nil at this point!")
 
