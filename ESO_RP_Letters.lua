@@ -1,7 +1,7 @@
 ESO_RP_LETTERS = {}
 ESO_RP_LETTERS.name = "ESO_RP_Letters"
 
-local logger = LibDebugLogger(EsoRpLetters.name)  -- Initialize logger here
+local logger = LibDebugLogger(ESO_RP_LETTERS.name)  -- Initialize logger here
 local ESO_RP_LETTERS_MAIN_SCENE -- We'll initialize this after the addon is loaded
 local LMM2  -- We'll initialize this after the addon is loaded
 local ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT 
@@ -9,7 +9,7 @@ local ESO_RP_LETTERS_MAIN_WINDOW
 
 
 -- This function creates a button in the Game Menu Bar
-function EsoRpLetters.init()
+function ESO_RP_LETTERS.init()
     logger:Info("Creating game menu button")
 
     -- Build the Menu
@@ -90,7 +90,7 @@ function EsoRpLetters.init()
     logger:Info("Game menu button created successfully")
 end
 
-function EsoRpLetters.CreateScene()
+function ESO_RP_LETTERS.CreateScene()
     logger.Info("init scene start");
     -- Main Scene
     ESO_RP_LETTERS_MAIN_SCENE = ZO_Scene:New("ESO_RP_LETTERSMain", SCENE_MANAGER) 
@@ -115,22 +115,22 @@ function EsoRpLetters.CreateScene()
     ESO_RP_LETTERS_MAIN_SCENE:AddFragment(ESO_RP_LETTERS_MAIN_WINDOW)
 end
 
-function EsoRpLetters.initStateChanges()
+function ESO_RP_LETTERS.initStateChanges()
     menuScene:RegisterCallback("StateChange", function(oldState, newState)
         LMM:ToggleCategory(MENU_CATEGORY_MYADDON)
     end)
 end
 
 
-function EsoRpLetters.Initialize()
+function ESO_RP_LETTERS.Initialize()
     logger:Info("Initializing ESO RP Letters...")
 end
 
-function EsoRpLetters.OnAddOnLoaded(event, addonName)
-    if addonName == EsoRpLetters.name then
-        EsoRpLetters.Initialize()
-        EVENT_MANAGER:UnregisterForEvent(EsoRpLetters.name, EVENT_ADD_ON_LOADED)
+function ESO_RP_LETTERS.OnAddOnLoaded(event, addonName)
+    if addonName == ESO_RP_LETTERS.name then
+        ESO_RP_LETTERS.Initialize()
+        EVENT_MANAGER:UnregisterForEvent(ESO_RP_LETTERS.name, EVENT_ADD_ON_LOADED)
     end
 end
 
-EVENT_MANAGER:RegisterForEvent("ESO_RP_Letters", EVENT_ADD_ON_LOADED, EsoRpLetters.OnAddOnLoaded)
+EVENT_MANAGER:RegisterForEvent("ESO_RP_Letters", EVENT_ADD_ON_LOADED, ESO_RP_LETTERS.OnAddOnLoaded)
