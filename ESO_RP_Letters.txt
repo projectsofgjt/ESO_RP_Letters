@@ -8,4 +8,3 @@
 ## OptionalDependsOn: LibDebugLogger
 
 ESO_RP_Letters.lua
-EsoRpLetters_UI.xml
