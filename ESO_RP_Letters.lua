@@ -3,7 +3,7 @@ ESO_RP_LETTERS.name = "ESO_RP_Letters"
 
 local logger = LibDebugLogger(ESO_RP_LETTERS.name)  -- Initialize logger here
 local ESO_RP_LETTERS_MAIN_SCENE -- We'll initialize this after the addon is loaded
-local LMM2  -- We'll initialize this after the addon is loaded
+local LMM = LibMainMenu2
 local ESO_RP_LETTERS_MAIN_TITLE_FRAGMENT 
 local ESO_RP_LETTERS_MAIN_WINDOW
 local ESO_RP_LETTERS_MAIN_MENU_CATEGORY_DATA
