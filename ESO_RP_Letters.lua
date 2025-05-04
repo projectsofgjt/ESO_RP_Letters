@@ -8,7 +8,7 @@ local LMM2  -- We'll initialize this after the addon is loaded
 local bookPanel
 local bg
 local label
-local list
+local list = {}
 local mainControl
 local items
 local scrollData 
@@ -69,17 +69,23 @@ function EsoRpLetters.InitPanel()
 
     -- Create the scroll list control as a child of maincontrol
     logger:Info("make scroll list control")
-    list = WINDOW_MANAGER:CreateControl("Scroll", mainControl, CT_CONTROL)
-    list:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
-    list:SetDimensions(600, 400)
+    list.control = WINDOW_MANAGER:CreateControl("EsoRpLettersList", mainControl, CT_CONTROL)
+    list.control:SetAnchor(TOPLEFT, mainControl, TOPLEFT, 20, 20)
+    list.control:SetDimensions(600, 400)
+
+    -- Create the "Scroll" child control, which will be the scrollable area
+    list.scrollControl = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersScroll", list.control, "ZO_ScrollContainer")
+    list.scrollControl:SetDimensions(400, 260)
+    list.scrollControl:SetAnchor(TOPLEFT, list.control, TOPLEFT, 0, 0)
+
     logger:Info("run ZO_scrollist one it somehow")
-    ZO_ScrollList_Initialize(self)
+    ZO_ScrollList_Initialize(list)
     
     list:SetHidden(false)
 
     logger:Info("add data type")
     -- Setup the list
-    ZO_ScrollList_AddDataType(list, 1, nil, 30, function(control, data)
+    ZO_ScrollList_AddDataType(list.scrollControl, 1, nil, 30, function(control, data)
         -- Create the label once
         if not control.label then
             control.label = WINDOW_MANAGER:CreateControl(nil, control, CT_LABEL)
@@ -90,9 +96,6 @@ function EsoRpLetters.InitPanel()
     
         control.label:SetText(data.text)
     end)
-
-    ZO_ScrollList_SetTypeSelectable(list, 1, true)
-    ZO_ScrollList_SetEqualityFunction(list, 1, function(left, right) return left.id == right.id end)
 
     -- Populate it with example data
     items = {}
@@ -105,10 +108,11 @@ function EsoRpLetters.InitPanel()
     ZO_ClearNumericallyIndexedTable(scrollData)
 
     for _, entry in ipairs(items) do
+        logger:Info("shove to sroll table: " .. i)
         table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, entry))
     end
 
-    ZO_ScrollList_Commit(list)
+    ZO_ScrollList_Commit(list.scrollControl)
 end
 
 
