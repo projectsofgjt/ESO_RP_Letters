@@ -56,13 +56,6 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
     
-    
-    -- Build control from xml
-    EsoRpLettersControl = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersControl", GuiRoot, "EsoRpLettersControl")
-    menuScene:AddFragment(ZO_FadeSceneFragment:New(EsoRpLettersControl))
-
-    menuScene:AddFragment(ZO_WindowTitleFragment:New(EsoRpLettersControl:GetNamedChild("Title")))
-
 end
 
 function EsoRpLetters.InitPanel()
