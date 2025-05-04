@@ -82,7 +82,12 @@ function EsoRpLetters.InitPanel()
     EsoRpLetters.scrollList = list  -- Save reference for later
 
     -- Setup the list
-    ZO_ScrollList_AddDataType(list, 1, "EsoRpLettersRow", 30, function(control, data)
+    ZO_ScrollList_AddDataType(list, 1, nil, 30, function(control, data)
+        if not control.label then
+            control.label = WINDOW_MANAGER:CreateControl(nil, control, CT_LABEL)
+            control.label:SetFont("ZoFontGame")
+            control.label:SetAnchor(LEFT, control, LEFT, 10, 0)
+        end
         control.label:SetText(data.text)
     end)
 

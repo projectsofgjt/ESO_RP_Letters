@@ -7,5 +7,5 @@
 ## DependsOn: LibAddonMenu-2.0 LibMainMenu-2.0
 ## OptionalDependsOn: LibDebugLogger
 
-EsoRpLettersRow.xml
+
 ESO_RP_Letters.lua
