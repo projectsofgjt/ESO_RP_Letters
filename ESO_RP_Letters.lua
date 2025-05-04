@@ -49,12 +49,12 @@ end
 
 function EsoRpLetters.InitScene()
     logger.Info("init scene start");
-    menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
-    menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
-    menuScene:AddFragment(TITLE_FRAGMENT)
-    menuScene:AddFragment(RIGHT_BG_FRAGMENT)
-    menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
+    -- menuScene = ZO_Scene:New(menuSceneName, SCENE_MANAGER)
+    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.MOUSE_DRIVEN_UI_WINDOW)
+    -- menuScene:AddFragmentGroup(FRAGMENT_GROUP.FRAME_TARGET_STANDARD_RIGHT_PANEL)
+    -- menuScene:AddFragment(TITLE_FRAGMENT)
+    -- menuScene:AddFragment(RIGHT_BG_FRAGMENT)
+    -- menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
     
 end
 
