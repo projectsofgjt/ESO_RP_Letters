@@ -56,8 +56,8 @@ function EsoRpLetters.InitScene()
     menuScene:AddFragment(RIGHT_BG_FRAGMENT)
     menuScene:AddFragment(PLAYER_PROGRESS_BAR_FRAGMENT)
 
-    -- Optional: set window title
-    -- menuScene:AddFragment(ZO_WindowTitleFragment:New(titleLabel))
+
+
 end
 
 function EsoRpLetters.InitPanel()
@@ -74,11 +74,45 @@ function EsoRpLetters.initStateChanges()
     end)
 end
 
+function EsoRpLetters.InitPanel()
+    logger.Info("init panel start")
+
+    -- Create the scroll list control as a child of ZO_RightPanelFootPrint (the default container in this fragment)
+    local container = ZO_RightPanelFootPrint
+    local list = WINDOW_MANAGER:CreateControlFromVirtual("EsoRpLettersList", container, "ZO_ScrollList")
+    list:SetAnchorFill()
+
+    EsoRpLetters.scrollList = list  -- Save reference for later
+
+    -- Setup the list
+    ZO_ScrollList_AddDataType(list, 1, "EsoRpLettersRow", 30, function(control, data)
+        control.label:SetText(data.text)
+    end)
+
+    ZO_ScrollList_SetTypeSelectable(list, 1, true)
+    ZO_ScrollList_SetEqualityFunction(list, 1, function(left, right) return left.id == right.id end)
+
+    -- Populate it with example data
+    local items = {}
+    for i = 1, 10 do
+        table.insert(items, { id = i, text = "Letter " .. i })
+    end
+
+    local scrollData = ZO_ScrollList_GetDataList(list)
+    ZO_ClearNumericallyIndexedTable(scrollData)
+
+    for _, entry in ipairs(items) do
+        table.insert(scrollData, ZO_ScrollList_CreateDataEntry(1, entry))
+    end
+
+    ZO_ScrollList_Commit(list)
+end
 
 function EsoRpLetters.Initialize()
     logger:Info("Initializing ESO RP Letters...")
     -- Set scene
     EsoRpLetters.InitScene();
+    EsoRpLetters.InitPanel()
     ZO_CreateStringId("STRID_ESO_RP_LETTERS_DISPLAY", "Letter Note Book");
     -- Register the button in the Game Menu Bar
     EsoRpLetters.CreateGameMenuButton()

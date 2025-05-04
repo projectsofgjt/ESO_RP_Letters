@@ -1,0 +1,14 @@
+<GuiXml>
+    <Controls>
+        <Control name="EsoRpLettersRow" virtual="true" inherits="ZO_SelectableLabel">
+            <Dimensions x="600" y="30"/>
+            <Anchor point="TOPLEFT"/>
+            <Anchor point="TOPRIGHT"/>
+            <Font>ZoFontGame</Font>
+            <Color r="1" g="1" b="1" a="1"/>
+            <OnMouseEnter>ZO_ScrollList_MouseEnter</OnMouseEnter>
+            <OnMouseExit>ZO_ScrollList_MouseExit</OnMouseExit>
+            <OnMouseUp>ZO_ScrollList_MouseClick</OnMouseUp>
+        </Control>
+    </Controls>
+</GuiXml>
